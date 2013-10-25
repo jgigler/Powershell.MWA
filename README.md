@@ -16,6 +16,22 @@ Requirements
 
 IIS v7.0+. IIS Management Tools and Scripts Feature must be enabled on any remote servers. For example, if you want to interact remotely with IIS servers from your admin workstation, IIS 7 is required on the admin workstation and IIS Management Tools and Scripts Feature must be enabled on any remote servers.
 
+Available Cmdlets
+=================
+
+Name
+----
+Add-IisSiteBinding
+Get-IisApplicationPool
+Get-IisSite
+New-IisApplicationPool
+New-IisSite
+Restart-IisApplicationPool
+Set-IisApplicationPoolUser
+Set-IisSiteCodePath
+Start-IisSite
+Stop-IisSite
+
 Usage
 =====
 
@@ -38,50 +54,6 @@ SYNOPSIS
     -HostHeader www.contoso.com
     
     
- 
-    
-
-NAME
-    Get-IisApplicationPool
-    
-SYNOPSIS
-    Gets information about Microsoft IIS7.0+ application pool configuration.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Get-IisApplicationPool -ComputerName 8.8.8.8, 8.8.4.4 -ApplicationPoolName contoso
-    
-    
-   
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    C:\PS>Get-IisSite -ComputerName 8.8.8.8, 8.8.4.4
-    
-    
-    
- 
-
-NAME
-    Get-IisSite
-    
-SYNOPSIS
-    Gets information about Microsoft IIS7.0+ website configuration.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Get-IisSite -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso
-    
- 
-    
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    C:\PS>Get-IisSite -ComputerName 8.8.8.8, 8.8.4.4
-    
-    
-
-    
 
 NAME
     New-IisApplicationPool
@@ -103,7 +75,6 @@ SYNOPSIS
     -Username foo -Password bar
     
     
-
     
 
 NAME
@@ -128,99 +99,3 @@ SYNOPSIS
     
 
 
-NAME
-    Restart-IisApplicationPool
-    
-SYNOPSIS
-    Restarts an IIS application pool.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Restart-IisApplicationPool -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso
-    
-    
-
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    C:\PS>Restart-IisApplicationPool -ComputerName 8.8.8.8, 8.8.4.4 -ApplicationPoolName contoso
-    
-   
-    
-    
-    -------------------------- EXAMPLE 3 --------------------------
-    
-    C:\PS>Get-IisSite -ComputerName 8.8.8.8, 8.8.4.4 -Sitename contoso | Restart-IisApplicationPool -ComputerName 
-    8.8.8.8, 8.8.4.4
-    
-    
- 
-    
-    -------------------------- EXAMPLE 4 --------------------------
-    
-    PS>$site = Get-IisSite -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso
-    
-    
-    PS> Restart-IisApplicationPool -InputObject $site -ComputerName 8.8.8.8, 8.8.4.4
-    
-    
-    
-    
-
-NAME
-    Set-IisApplicationPoolUser
-    
-SYNOPSIS
-    Sets the user an IIS application pool runs under.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Set-IisApplicationPoolUser -ComputerName 8.8.8.8, 8.8.4.4 -ApplicationPoolName contoso, foo, bar, cheese, 
-    sausage -Username "domain\foo" -Password bar
-    
- 
-    
-
-NAME
-    Set-IisSiteCodePath
-    
-SYNOPSIS
-    Updates the physical path of an IIS website.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Set-IisSiteCodePath -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso -CodePath "C:\inetpub\wwwroot\codepath"
-    
-
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    C:\PS>Set-IisSiteCodePath -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso -CodePath "\\Fileshare\path\to\new\code"
-    
-    
-
-    
-
-NAME
-    Start-IisSite
-    
-SYNOPSIS
-    Starts an IIS website.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Start-IisSite -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso
-    
-  
-    
-
-NAME
-    Stop-IisSite
-    
-SYNOPSIS
-    Restarts an IIS application pool.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>StopIisSite -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso
-    
