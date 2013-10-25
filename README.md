@@ -19,8 +19,6 @@ IIS v7.0+. IIS Management Tools and Scripts Feature must be enabled on any remot
 Available Cmdlets
 =================
 
-Name
-----
 Add-IisSiteBinding
 Get-IisApplicationPool
 Get-IisSite
