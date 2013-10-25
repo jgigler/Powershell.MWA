@@ -8,6 +8,8 @@ One of the main motivations behind this was for batch processing of new sites an
 
 The PSCustomObjects that are returned by Get-IisApplicationPool and Get-IisSite were designed based on what is useful for me in our environment.  We don't have any FTP sites, we use an SSL Proxy, and I haven't figured out how to deal with redirects beyond appcmd commands.  Feel free to extend the functionality for Certificate management, FTP, and redirects, as those are either non-existent issues for us or don't have enough value in figuring out beyond our current automation means at the moment.
 
+For usuage information about the cmdlets, please use the built-in Get-Help system.  I have provided fairly basic help documentation that should be adequate in figuring out cmdlet usage.  Please use the issue tracker to report any bugs and I'll do my best to fix them.
+
 Requirements
 ============
 
