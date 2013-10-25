@@ -20,15 +20,25 @@ Available Cmdlets
 =================
 
 Add-IisSiteBinding
+
 Get-IisApplicationPool
+
 Get-IisSite
+
 New-IisApplicationPool
+
 New-IisSite
+
 Restart-IisApplicationPool
+
 Set-IisApplicationPoolUser
+
 Set-IisSiteCodePath
+
 Start-IisSite
+
 Stop-IisSite
+
 
 Usage
 =====
