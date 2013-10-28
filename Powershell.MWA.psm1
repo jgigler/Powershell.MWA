@@ -983,26 +983,7 @@ function New-IisSite
         [Parameter(Mandatory=$false,
                    Position=6,
                    ParameterSetName="SingleSite")]
-        [bool]$Enable32bit = $false,
-
-        # Param6 help description
-        [ValidateSet("ApplicationPoolIdentity", "SpecificUser")]
-        [Parameter(Mandatory=$true,
-                   Position=7,
-                   ParameterSetName="SingleSite")]
-        [String]$IdentityType,
-
-        # Param7 help description
-        [Parameter(Mandatory=$true,
-                   Position=8,
-                   ParameterSetName="SingleSite")]
-        $UserName,
-
-        # Param8 help description
-        [Parameter(Mandatory=$true,
-                   Position=9,
-                   ParameterSetName="SingleSite")]
-        $Password
+        [bool]$Enable32bit = $false
     )
  
     Begin
@@ -1035,11 +1016,7 @@ function New-IisSite
 
                         $NewApplicationPool.ManagedRuntimeVersion = "$ApplicationPool.ManagedRuntimeVersion"
                         $NewApplicationPool.ProcessModel.IdentityType = $ApplicationPool.IdentityType	
-                        if ($IdentityType -eq "SpecificUser")
-                        {
-                            $NewApplicationPool.ProcessModel.UserName = $UserName
-                            $NewApplicationPool.ProcessModel.Password = $Password
-                        }	
+
                         $ServerManager.ApplicationPools.Add($NewApplicationPool) | Out-Null
                     }
 
@@ -1081,11 +1058,6 @@ function New-IisSite
 
                     $NewApplicationPool.ManagedRuntimeVersion = $ManagedRuntimeVersion
                     $NewApplicationPool.ProcessModel.IdentityType = $IdentityType
-                    if ($IdentityType -eq "SpecificUser")
-                    {
-                        $NewApplicationPool.ProcessModel.UserName = $UserName
-                        $NewApplicationPool.ProcessModel.Password = $Password
-                    }	
                     $ServerManager.ApplicationPools.Add($NewApplicationPool) | Out-Null
                 }
 
