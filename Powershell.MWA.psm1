@@ -302,6 +302,7 @@ function Add-IisSiteBinding
 
             finally
             {
+                Write-Verbose "Committing and cleaing up . . ."
                 $ServerManager.CommitChanges()
                 $ServerManager.Dispose()
             }
@@ -383,6 +384,7 @@ function Set-IisSiteCodePath
 
             finally
             {
+                Write-Verbose "Committing and cleaing up . . ."                
                 $ServerManager.CommitChanges()
                 $ServerManager.Dispose()
             }
@@ -484,6 +486,7 @@ function Restart-IisApplicationPool
 
                 finally
                 {
+                    Write-Verbose "Committing and cleaing up . . ."
                     $ServerManager.CommitChanges()
                     $ServerManager.Dispose()
                 }
@@ -522,6 +525,7 @@ function Restart-IisApplicationPool
 
                 finally
                 {
+                    Write-Verbose "Committing and cleaing up . . ."                   
                     $ServerManager.CommitChanges()
                     $ServerManager.Dispose()
                 }
@@ -559,6 +563,7 @@ function Restart-IisApplicationPool
 
                 finally
                 {
+                    Write-Verbose "Committing and cleaing up . . ."
                     $ServerManager.CommitChanges()
                     $ServerManager.Dispose()
                 }
@@ -701,7 +706,7 @@ function Stop-IisSite
 .DESCRIPTION
    Creates new IIS websites from a PSCustomObject or named parameter set. The input object matches the design of the object(s) returned from Get-IisSite.
 .EXAMPLE
-   Get-IisSite -ComputerName 8.8.8.8 | New-IisSite
+   Get-IisSite -ComputerName 8.8.8.8 | New-IisSite -ComputerName 8.8.4.4
 .Example
     New-IisSite -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso -CodePath "D:\inetpub\wwwroot\code" -ApplicationPoolName ContosoAppPool -Bindings "*:80:www.consoso.com", "*:443:www.contoso.com"
 .NOTES
@@ -927,7 +932,7 @@ function New-IisSite
 .DESCRIPTION
    Creates new IIS application pools from a PSCustomObject or a named parameter set. The input object matches the design of the object(s) returned from Get-IisApplicationPool.
 .EXAMPLE
-   Get-IisApplicationPool -ComputerName 8.8.8.8 | New-IisApplicationPool -Username "foo" -Password "bar"
+   Get-IisApplicationPool -ComputerName 8.8.8.8 | New-IisApplicationPool -ComputerName -8.8.4.4 -Username "foo" -Password "bar"
 .Example
     New-IisApplicationPool -ComputerName 8.8.8.8, 8.8.4.4 -ApplicationPoolName contoso -AutoStart $true -ManagedPipelineMode Integrated -ManagedRuntimeVersion "v4.0" -Enable32bit $false -IdentityType SpecificUser -Username foo -Password bar
 .NOTES
@@ -989,12 +994,14 @@ function New-IisSite
 
         # Param7 help description
         [Parameter(Mandatory=$true,
-                   Position=8)]
+                   Position=8,
+                   ParameterSetName="SingleSite")]
         $UserName,
 
         # Param8 help description
         [Parameter(Mandatory=$true,
-                   Position=9)]
+                   Position=9,
+                   ParameterSetName="SingleSite")]
         $Password
     )
  
