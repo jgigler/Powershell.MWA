@@ -43,67 +43,47 @@ Stop-IisSite
 Usage
 =====
 
-NAME
-    Add-IisSiteBinding
-    
-SYNOPSIS
-    Adds a new binding to a Microsoft IIS7.0+ website.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Add-IisSiteBinding -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso -HostHeader www.contoso.com
-    
-    
- 
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    C:\PS>Add-IisSiteBinding -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso -IP 8.8.5.5 -Port 443 -Protocol https 
-    -HostHeader www.contoso.com
-    
-    
+PS C:\Users\jgigler> Get-IisSite -ComputerName localhost -Verbose
+VERBOSE: Connecting to localhost
+VERBOSE: Getting site Default Web Site
 
-NAME
-    New-IisApplicationPool
-    
-SYNOPSIS
-    Creates new IIS application pools.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Get-IisApplicationPool -ComputerName 8.8.8.8 | New-IisApplicationPool -Username "foo" -Password "bar"
-    
 
-    
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    C:\PS>New-IisApplicationPool -ComputerName 8.8.8.8, 8.8.4.4 -ApplicationPoolName contoso -AutoStart $true 
-    -ManagedPipelineMode Integrated -ManagedRuntimeVersion "v4.0" -Enable32bit $false -IdentityType SpecificUser 
-    -Username foo -Password bar
-    
-    
-    
+Bindings           : *:80:
+VirtualDirectories : @{Path=/; PhysicalPath=%SystemDrive%\inetpub\wwwroot}
+ApplicationPool    : DefaultAppPool
+Name               : Default Web Site
+Id                 : 1
 
-NAME
-    New-IisSite
-    
-SYNOPSIS
-    Creates new IIS websites.
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    C:\PS>Get-IisSite -ComputerName 8.8.8.8 | New-IisSite
-    
-    
+VERBOSE: Getting site testsite1
+Bindings           : *:80:www.testsite1.com
+VirtualDirectories : @{Path=/; PhysicalPath=C:\inetpub\wwwroot\test}
+ApplicationPool    : DefaultAppPool
+Name               : testsite1
+Id                 : 770824556
 
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    C:\PS>New-IisSite -ComputerName 8.8.8.8, 8.8.4.4 -SiteName contoso -CodePath "D:\inetpub\wwwroot\code" 
-    -ApplicationPoolName ContosoAppPool -Bindings "*:80:www.consoso.com", "*:443:www.contoso.com"
-    
-    
-    
+VERBOSE: Getting site testsite2
+Bindings           : *:80:www.testsite2.com
+VirtualDirectories : @{Path=/; PhysicalPath=C:\inetpub\wwwroot\test}
+ApplicationPool    : DefaultAppPool
+Name               : testsite2
+Id                 : 770824559
 
+PS C:\Users\jgigler> Get-IisApplicationPool -ComputerName localhost -Verbose
+VERBOSE: Connecting to localhost
+
+
+PipelineMode : Integrated
+Enable32Bit  : False
+Name         : DefaultAppPool
+Version      : v2.0
+AutoStart    : True
+
+PS C:\Users\jgigler> Add-IisSiteBinding -ComputerName localhost -SiteName "Default Web Site", "testsite1" -HostHeader ww
+w.moartesting.com -Verbose
+VERBOSE: Connecting to localhost
+VERBOSE: Getting site Default Web Site
+VERBOSE: Adding *:80:www.moartesting.com to site
+VERBOSE: Getting site testsite1
+VERBOSE: Adding *:80:www.moartesting.com to site
+VERBOSE: Committing and cleaing up . . .
 
