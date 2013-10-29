@@ -44,7 +44,6 @@ Examples
 ========
 
 Get-IisSite
------------
 ````
 PS C:\Users\jgigler> Get-IisSite -ComputerName localhost -Verbose
 VERBOSE: Connecting to localhost
@@ -72,7 +71,6 @@ Id                 : 770824559
 ````
 
 Get-IisApplicationPool
-----------------------
 ````
 PS C:\Users\jgigler> Get-IisApplicationPool -ComputerName localhost -Verbose
 VERBOSE: Connecting to localhost
@@ -86,7 +84,6 @@ AutoStart    : True
 ````
 
 Add-IisSiteBinding
-------------------
 ````
 PS C:\Users\jgigler> Add-IisSiteBinding -ComputerName localhost -SiteName "Default Web Site", "testsite1" -HostHeader ww
 w.moartesting.com -Verbose
