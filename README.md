@@ -40,13 +40,12 @@ Start-IisSite
 Stop-IisSite
 
 
-Usage
-=====
-
+Examples
+========
+````
 PS C:\Users\jgigler> Get-IisSite -ComputerName localhost -Verbose
 VERBOSE: Connecting to localhost
 VERBOSE: Getting site Default Web Site
-
 
 Bindings           : *:80:
 VirtualDirectories : @{Path=/; PhysicalPath=%SystemDrive%\inetpub\wwwroot}
@@ -67,7 +66,9 @@ VirtualDirectories : @{Path=/; PhysicalPath=C:\inetpub\wwwroot\test}
 ApplicationPool    : DefaultAppPool
 Name               : testsite2
 Id                 : 770824559
+````
 
+````
 PS C:\Users\jgigler> Get-IisApplicationPool -ComputerName localhost -Verbose
 VERBOSE: Connecting to localhost
 
@@ -77,7 +78,9 @@ Enable32Bit  : False
 Name         : DefaultAppPool
 Version      : v2.0
 AutoStart    : True
+````
 
+````
 PS C:\Users\jgigler> Add-IisSiteBinding -ComputerName localhost -SiteName "Default Web Site", "testsite1" -HostHeader ww
 w.moartesting.com -Verbose
 VERBOSE: Connecting to localhost
@@ -86,4 +89,4 @@ VERBOSE: Adding *:80:www.moartesting.com to site
 VERBOSE: Getting site testsite1
 VERBOSE: Adding *:80:www.moartesting.com to site
 VERBOSE: Committing and cleaing up . . .
-
+````
