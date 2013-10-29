@@ -62,7 +62,7 @@ function Get-IisSite
             
             catch
             {
-                Write-Warning -Message "$Error[0]"
+                Write-Warning -Message $Error[0]
             }
         }
 
@@ -96,7 +96,7 @@ function Get-IisSite
 
             catch
             {
-                Write-Warning -Message "$Error[0]"
+                Write-Warning -Message $Error[0]
             }
         }
     }
@@ -205,7 +205,7 @@ function Get-IisApplicationPool
 
             catch
             {
-                Write-Warning -Message "$Error[0]"
+                Write-Warning -Message $Error[0]
             }
         }
     }
@@ -245,7 +245,7 @@ function Add-IisSiteBinding
         # Param2 help description
         [Parameter(Mandatory=$true,
                    Position=1)]
-        [string]$SiteName,
+        [string[]]$SiteName,
 
         # Param3 help description
         [Parameter(Mandatory=$false,
@@ -280,24 +280,35 @@ function Add-IisSiteBinding
 
             try
             {
-                Write-Verbose "Getting site $SiteName"
-                $Site = $ServerManager.Sites["$SiteName"]
-
-                ForEach ($Header in $HostHeader)
+                foreach ($site in $SiteName)
                 {
-                    $NewBinding = "$($Ip):$($Port):$($Header)"
-                    $binding = $Site.Bindings.CreateElement()
-                    $binding.Protocol = $Protocol
-                    $binding.BindingInformation = $NewBinding
+                    try
+                    {
+                        Write-Verbose "Getting site $site"
+                        $Site = $ServerManager.Sites["$site"]
 
-                    Write-Verbose "Adding $NewBinding to site"
-                    $Site.Bindings.AddAt(0, $binding) | Out-Null
+                        ForEach ($Header in $HostHeader)
+                        {
+                            $NewBinding = "$($Ip):$($Port):$($Header)"
+                            $binding = $Site.Bindings.CreateElement()
+                            $binding.Protocol = $Protocol
+                            $binding.BindingInformation = $NewBinding
+
+                            Write-Verbose "Adding $NewBinding to site"
+                            $Site.Bindings.AddAt(0, $binding) | Out-Null
+                        }
+                    }
+
+                    catch
+                    {
+                        Write-Warning -Message $Error[0]
+                    }
                 }
             }
 
             catch
             {
-                Write-Warning -Message "$Error[0]"
+                Write-Warning -Message $Error[0]
             }
 
             finally
@@ -379,7 +390,7 @@ function Set-IisSiteCodePath
 
             catch
             {
-                Write-Warning -Message "$Error[0]"
+                Write-Warning -Message $Error[0]
             }
 
             finally
@@ -520,7 +531,7 @@ function Restart-IisApplicationPool
 
                 catch
                 {
-                    Write-Warning -Message "$Error[0]"
+                    Write-Warning -Message $Error[0]
                 }
 
                 finally
@@ -686,7 +697,7 @@ function Stop-IisSite
 
             catch
             {
-                Write-Warning -Message "$Error[0]"
+                Write-Warning -Message $Error[0]
             }
 
             finally
