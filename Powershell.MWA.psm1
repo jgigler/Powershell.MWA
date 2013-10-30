@@ -25,7 +25,7 @@ function Get-IisSite
         [Parameter(Mandatory=$false,
                    Position=1,
                    ParameterSetName="SingleSite")]
-        [string]$SiteName
+        [string[]]$SiteName
     )
 
     Begin
@@ -37,32 +37,35 @@ function Get-IisSite
     {
         if ($SiteName)
         {
-            try
+            ForEach ($Site in $SiteName)
             {
-                Write-Verbose "Getting site $SiteName"
-                $Site = $ServerManager.Sites[$SiteName]
-                $SiteObject = New-Object PSObject -Property @{
+                try
+                {
+                    Write-Verbose "Getting site $Site"
+                    $Site = $ServerManager.Sites[$Site]
+                    $SiteObject = New-Object PSObject -Property @{
 
-                    Name = $null
-                    Id   = $null
-                    ApplicationPool = $null
-                    Bindings = @()
-                    VirtualDirectories = $null
+                        Name = $null
+                        Id   = $null
+                        ApplicationPool = $null
+                        Bindings = @()
+                        VirtualDirectories = $null
 
+                    }
+
+                    $SiteObject.Name = $Site.Name
+                    $SiteObject.Id = $Site.Id
+                    $SiteObject.ApplicationPool = $Site.Applications["/"].ApplicationPoolName
+                    $SiteObject.Bindings = $Site.Bindings | Select -ExpandProperty BindingInformation
+                    $SiteObject.VirtualDirectories = $Site.Applications.VirtualDirectories | Select Path, PhysicalPath
+
+                    Write-Output $SiteObject
                 }
-
-                $SiteObject.Name = $Site.Name
-                $SiteObject.Id = $Site.Id
-                $SiteObject.ApplicationPool = $Site.Applications["/"].ApplicationPoolName
-                $SiteObject.Bindings = $Site.Bindings | Select -ExpandProperty BindingInformation
-                $SiteObject.VirtualDirectories = $Site.Applications.VirtualDirectories | Select Path, PhysicalPath
-
-                Write-Output $SiteObject
-            }
             
-            catch
-            {
-                Write-Warning -Message $Error[0]
+                catch
+                {
+                    Write-Warning -Message $Error[0]
+                }
             }
         }
 
@@ -81,11 +84,13 @@ function Get-IisSite
                         ApplicationPool = $null
                         Bindings = @()
                         VirtualDirectories = $null
+                        State = $null
 
                     }
 
                     $SiteObject.Name = $Site.Name
                     $SiteObject.Id = $Site.Id
+                    $SiteObject.State = $Site.State
                     $SiteObject.ApplicationPool = $Site.Applications["/"].ApplicationPoolName
                     $SiteObject.Bindings = $Site.Bindings | Select -ExpandProperty BindingInformation
                     $SiteObject.VirtualDirectories = $Site.Applications.VirtualDirectories | Select Path, PhysicalPath
@@ -132,7 +137,7 @@ function Get-IisApplicationPool
         [Parameter(Mandatory=$false,
                    Position=1,
                    ParameterSetName="singleApplicationPool")]
-        [string]$ApplicationPoolName
+        [string[]]$ApplicationPoolName
     )
 
     Begin
@@ -144,35 +149,41 @@ function Get-IisApplicationPool
     {
         if ($ApplicationPoolName)
         {
-            try
+            ForEach ($ApplicationPool in $ApplicationPoolName)
             {
-                Write-Verbose "Getting application pool $ApplicationPoolName"
-                $ApplicationPool = $ServerManager.ApplicationPools[$ApplicationPoolName]
-                $ApplicationPoolObject = New-Object PSObject -Property @{
+                try
+                {
+                    Write-Verbose "Getting application pool $ApplicationPool"
+                    $ApplicationPool = $ServerManager.ApplicationPools[$ApplicationPool]
+                    $ApplicationPoolObject = New-Object PSObject -Property @{
 
-                    Name = $null
-                    Version   = $null
-                    PipelineMode = $null
-                    Enable32Bit = $null
-                    AutoStart = $null
-                    IdentityType = $null
+                        Name = $null
+                        Version   = $null
+                        PipelineMode = $null
+                        Enable32Bit = $null
+                        AutoStart = $null
+                        IdentityType = $null
+                        State = $null
 
+                    }
+
+                    $ApplicationPoolObject.Name = $ApplicationPool.Name
+                    $ApplicationPoolObject.Version = $ApplicationPool.ManagedRuntimeVersion
+                    $ApplicationPoolObject.PipelineMode = $ApplicationPool.ManagedPipelineMode
+                    $ApplicationPoolObject.Enable32Bit = $ApplicationPool.Enable32BitAppOnWin64
+                    $ApplicationPoolObject.AutoStart = $ApplicationPool.AutoStart
+                    $ApplicationPoolObject.IdentityType = $ApplicationPool.ProcessModel.IdentityType
+                    $ApplicationPoolObject.State = $ApplicationPool.State
+
+                    Write-Output $ApplicationPoolObject
                 }
 
-                $ApplicationPoolObject.Name = $ApplicationPool.Name
-                $ApplicationPoolObject.Version = $ApplicationPool.ManagedRuntimeVersion
-                $ApplicationPoolObject.PipelineMode = $ApplicationPool.ManagedPipelineMode
-                $ApplicationPoolObject.Enable32Bit = $ApplicationPool.Enable32BitAppOnWin64
-                $ApplicationPoolObject.AutoStart = $ApplicationPool.AutoStart
-                $ApplicationPoolObject.IdentityType = $ApplicationPool.ProcessModel.IdentityType
-
-                Write-Output $ApplicationPoolObject
+                catch
+                {
+                    Write-Warning $Error[0]
+                }
             }
 
-            catch
-            {
-
-            }
         }
 
         else
