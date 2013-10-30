@@ -45,29 +45,25 @@ Examples
 
 Get-IisSite
 ````
-PS C:\Users\jgigler> Get-IisSite -ComputerName localhost -Verbose
+PS C:\Users\jgigler> Get-IisSite -ComputerName localhost -SiteName testsite1, testsite2 -Verbose
 VERBOSE: Connecting to localhost
-VERBOSE: Getting site Default Web Site
-
-Bindings           : *:80:
-VirtualDirectories : @{Path=/; PhysicalPath=%SystemDrive%\inetpub\wwwroot}
-ApplicationPool    : DefaultAppPool
-Name               : Default Web Site
-Id                 : 1
-
 VERBOSE: Getting site testsite1
-Bindings           : *:80:www.testsite1.com
-VirtualDirectories : @{Path=/; PhysicalPath=C:\inetpub\wwwroot\test}
-ApplicationPool    : DefaultAppPool
-Name               : testsite1
+
+
 Id                 : 770824556
+Name               : testsite1
+ApplicationPool    : DefaultAppPool
+Bindings           : {*:80:www.moartesting.com, *:80:www.testsite1.com}
+State              : Stopped
+VirtualDirectories : @{Path=/; PhysicalPath=C:\inetpub\wwwroot\test}
 
 VERBOSE: Getting site testsite2
-Bindings           : *:80:www.testsite2.com
-VirtualDirectories : @{Path=/; PhysicalPath=C:\inetpub\wwwroot\test}
-ApplicationPool    : DefaultAppPool
-Name               : testsite2
 Id                 : 770824559
+Name               : testsite2
+ApplicationPool    : DefaultAppPool
+Bindings           : *:80:www.testsite2.com
+State              : Started
+VirtualDirectories : @{Path=/; PhysicalPath=C:\inetpub\wwwroot\test}
 ````
 
 Get-IisApplicationPool
@@ -76,11 +72,12 @@ PS C:\Users\jgigler> Get-IisApplicationPool -ComputerName localhost -Verbose
 VERBOSE: Connecting to localhost
 
 
-PipelineMode : Integrated
-Enable32Bit  : False
-Name         : DefaultAppPool
 Version      : v2.0
+Name         : DefaultAppPool
+PipelineMode : Integrated
 AutoStart    : True
+State        : Started
+Enable32Bit  : False
 ````
 
 Add-IisSiteBinding
