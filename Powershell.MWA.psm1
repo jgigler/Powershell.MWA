@@ -50,11 +50,13 @@ function Get-IisSite
                         ApplicationPool = $null
                         Bindings = @()
                         VirtualDirectories = $null
+                        State = $null
 
                     }
 
                     $SiteObject.Name = $Site.Name
                     $SiteObject.Id = $Site.Id
+                    $SiteObject.State = $Site.State
                     $SiteObject.ApplicationPool = $Site.Applications["/"].ApplicationPoolName
                     $SiteObject.Bindings = $Site.Bindings | Select -ExpandProperty BindingInformation
                     $SiteObject.VirtualDirectories = $Site.Applications.VirtualDirectories | Select Path, PhysicalPath
@@ -201,6 +203,7 @@ function Get-IisApplicationPool
                         PipelineMode = $null
                         Enable32Bit = $null
                         AutoStart = $null
+                        State = $null
 
                     }
 
@@ -209,6 +212,7 @@ function Get-IisApplicationPool
                     $ApplicationPoolObject.PipelineMode = $ApplicationPool.ManagedPipelineMode
                     $ApplicationPoolObject.Enable32Bit = $ApplicationPool.Enable32BitAppOnWin64
                     $ApplicationPoolObject.AutoStart = $ApplicationPool.AutoStart
+                    $ApplicationPoolObject.State = $ApplicationPool.State
 
                     Write-Output $ApplicationPoolObject
                 }
