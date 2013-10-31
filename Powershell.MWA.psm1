@@ -195,6 +195,7 @@ function Get-IisApplicationPool
                 $ApplicationPools = $ServerManager.ApplicationPools
                 ForEach ($ApplicationPool in $ApplicationPools)
                 {
+                    Write-Verbose "Getting application pool $($ApplicationPool.Name)"
                     $ApplicationPool = $ServerManager.ApplicationPools["$($ApplicationPool.Name)"]
                     $ApplicationPoolObject = New-Object PSObject -Property @{
 
@@ -227,6 +228,7 @@ function Get-IisApplicationPool
 
     End
     {
+
         $ServerManager.Dispose()
     }
 }
@@ -651,7 +653,7 @@ function Start-IisSite
 
             catch
             {
-                Write-Warning "$Error[0]"
+                Write-Warning $Error[0]
             }
 
             finally
@@ -1048,12 +1050,12 @@ function New-IisSite
 
                     catch
                     {
-                        Write-Warning -Message "$($Error[0])"
+                        Write-Warning -Message $Error[0]
                     }
 
                     finally
                     {
-                        Write-Verbose "Committing changes . . ."
+                        Write-Verbose "Committing changes and cleaning up . . ."
                         $ServerManager.CommitChanges()
                         $ServerManager.Dispose()
                     }
@@ -1083,13 +1085,12 @@ function New-IisSite
                     }
 
                     $NewApplicationPool.ManagedRuntimeVersion = $ManagedRuntimeVersion
-                    $NewApplicationPool.ProcessModel.IdentityType = $IdentityType
                     $ServerManager.ApplicationPools.Add($NewApplicationPool) | Out-Null
                 }
 
                 catch
                 {
-                    Write-Warning -Message "$($Error[0])"
+                    Write-Warning -Message $Error[0]
                 }
 
                 finally
