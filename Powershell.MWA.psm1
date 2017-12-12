@@ -1001,7 +1001,7 @@ function New-IisSite
                    ParameterSetName="SingleSite")]
         [String]$ManagedPipelineMode,
 
-        [ValidateSet("v1.1", "v2.0", "v4.0")]
+        [ValidateSet("v1.1", "v2.0", "v4.0", "No Managed Code")]
         [Parameter(Mandatory=$true,
                    Position=5,
                    ParameterSetName="SingleSite")]
